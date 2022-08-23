@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:la_vie/business_logic/cubit/regidtration_cubit/registration_cubit.dart';
 import 'package:la_vie/business_logic/cubit/regidtration_cubit/registration_states.dart';
 
-import '../../widgets/mobile/logo.dart';
+import '../../widgets/mobile/global/logo.dart';
 import '../../widgets/mobile/registration/login_container.dart';
 import '../../widgets/mobile/registration/other_registration.dart';
 import '../../widgets/mobile/registration/registration_background.dart';
@@ -23,7 +23,7 @@ class RegistrationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     firstNameController.text = 'kerolos1';
     lastNameController.text = 'faie1';
-    emailController.text = 'kerolosfaie71@gmail.com';
+    emailController.text = 'kokofaie7@gmail.com';
     passwordController.text = '11AAaa@@';
     confirmPasswordController.text = '11AAaa@@';
     return BlocProvider(
@@ -31,12 +31,15 @@ class RegistrationScreen extends StatelessWidget {
       child: BlocConsumer<RegistrationCubit, RegistrationState>(
         listener: (BuildContext context, RegistrationState state) {
           if (state is SignUpErrorRegistrationState) {
-            print("+++++++++++++++++++++++++");
-            print(state.error);
+            print("++++++++++++++++++++++++");
           } else if (state is SignUpSuccessRegistrationState) {
+            // showToast(message: state.registrationModel.message);
+            ScaffoldMessenger.of(context)
+                .showSnackBar(
+                SnackBar(content: Text(state.registrationModel.message)));
             print("-------------------------");
-            print(state.registrationModel.message);
-            print(state.registrationModel.toMap());
+            // print(state.registrationModel.message);
+            // print(state.registrationModel.toMap());
           }
         },
         builder: (BuildContext context, RegistrationState state) {
@@ -53,15 +56,21 @@ class RegistrationScreen extends StatelessWidget {
                           child: Column(
                             children: [
                               SizedBox(
-                                height: MediaQuery.of(context).size.height / 7,
+                                height: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .height / 7,
                               ),
                               logo(fontSize: 27),
                               SizedBox(
-                                height: MediaQuery.of(context).size.height / 16,
+                                height: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .height / 16,
                               ),
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                MainAxisAlignment.spaceAround,
                                 children: [
                                   registrationText(
                                       text: 'Sign Up',
@@ -78,37 +87,48 @@ class RegistrationScreen extends StatelessWidget {
                                 ],
                               ),
                               SizedBox(
-                                height: MediaQuery.of(context).size.height / 20,
+                                height: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .height / 20,
                               ),
                               cub.registrationFlag
                                   ? loginContainer(
-                                      onTap: () {},
-                                      context: context,
-                                      emailController: emailController,
-                                      passwordController: passwordController)
+                                  onTap: () {
+                                    cub.login(
+                                        email: emailController.text,
+                                        password: passwordController.text,
+                                        buildContext: context);
+                                  },
+                                  context: context,
+                                  emailController: emailController,
+                                  passwordController: passwordController)
                                   : signUpContainer(
-                                      formKey: formKey,
-                                      onTap: () {
-                                        if (formKey.currentState!.validate()) {
-                                          cub.signUp(
-                                              email: emailController.text,
-                                              password: passwordController.text,
-                                              firstName:
-                                                  firstNameController.text,
-                                              lastName:
-                                                  lastNameController.text);
-                                        }
-                                      },
-                                      context: context,
-                                      emailController: emailController,
-                                      passwordController: passwordController,
-                                      confirmPasswordController:
-                                          confirmPasswordController,
-                                      firstNameController: firstNameController,
-                                      lastNameController: lastNameController,
-                                    ),
+                                formKey: formKey,
+                                onTap: () {
+                                  if (formKey.currentState!.validate()) {
+                                    cub.signUp(
+                                        email: emailController.text,
+                                        password: passwordController.text,
+                                        firstName:
+                                        firstNameController.text,
+                                        lastName: lastNameController.text,
+                                        buildContext: context);
+                                  }
+                                },
+                                context: context,
+                                emailController: emailController,
+                                passwordController: passwordController,
+                                confirmPasswordController:
+                                confirmPasswordController,
+                                firstNameController: firstNameController,
+                                lastNameController: lastNameController,
+                              ),
                               SizedBox(
-                                height: MediaQuery.of(context).size.height / 40,
+                                height: MediaQuery
+                                    .of(context)
+                                    .size
+                                    .height / 40,
                               ),
                               otherRegistration(
                                   onPressGoogle: () {}, onPressFacebook: () {}),

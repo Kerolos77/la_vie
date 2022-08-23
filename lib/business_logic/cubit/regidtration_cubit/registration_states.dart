@@ -14,8 +14,4 @@ class SignUpSuccessRegistrationState extends RegistrationState {
   SignUpSuccessRegistrationState(this.registrationModel);
 }
 
-class SignUpErrorRegistrationState extends RegistrationState {
-  final String error;
-
-  SignUpErrorRegistrationState({required this.error});
-}
+class SignUpErrorRegistrationState extends RegistrationState {}

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:la_vie/presentation/screens/mobile/regisation_screen.dart';
-import 'package:la_vie/presentation/widgets/mobile/logo.dart';
+import 'package:la_vie/presentation/widgets/mobile/global/logo.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
